@@ -1,0 +1,43 @@
+section{
+  margin-top:40px
+}
+
+.folder{
+  list-style-type: '+';
+}
+
+.file{
+  list-style-type: '';
+}
+
+.closeList>ul{
+  display: none;
+}
+
+.openList{
+  list-style-type: '-'!important;
+  >ul{
+    display: block;
+  }
+}
+
+li, ul{
+  cursor: pointer;
+  button{
+    margin: 10px;
+  }
+  padding-left: 10px;
+}
+
+.itemAddForm{
+  display: flex;
+}
+
+h6{
+  color:#757575;
+}
+
+.form-group>button{
+  margin-top:10px;
+  float:right;
+}

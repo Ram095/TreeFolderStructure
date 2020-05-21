@@ -1,0 +1,39 @@
+<section>
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-xs-12 ">
+          <legend>Folder structure</legend>
+            <h6>Current working directory : {{currentWorkingDirectory}}</h6>
+            <ul>
+              <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: list }"></ng-container>
+            </ul>
+            <ng-template #recursiveListTmpl let-list="list">
+              <li [ngClass]="{ 'openList': item.isActive && item.children?.length > 0 , 'closeList': !item.isActive , 'folder': item.children?.length > 0, 'file':!(item.children?.length > 0)  }"
+                (click)="toggleClass(item,$event)"  *ngFor="let item of list; let i = index">
+               <i class="glyphicon glyphicon-eur"></i>   {{ item.title }} <button class="btn btn-light" (click)="onSelect(item);$event.stopPropagation()">+</button>
+                <ul (click)="toggleClass(item,$event)" *ngIf="item.children?.length > 0">
+                  <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.children }"></ng-container>
+                </ul>
+              </li>
+            </ng-template>
+        </div>
+        <div class="col-lg-4" >
+          <div *ngIf="showInput">
+            <h4>Adding item to {{this.selectedItem.title}}</h4>
+            <h6>Please enter the title of the item you wish to add</h6><br>
+            <form [formGroup]="form" (ngSubmit)="addItem()">
+              <div class="form-group">
+                <label for="folderTitle"> Folder Title</label>
+                <input formControlName="folderTitle" id="folderTitle" type="text" class="form-control"  />
+                <div *ngIf="folderTitle.touched && folderTitle.invalid" class="alert alert-danger">
+                    <div *ngIf="folderTitle.errors.required" >Folder title is required</div>
+                </div>
+                <button type="submit" class="btn btn-primary" >Add</button>
+              </div>
+              <div *ngIf="form.errors" class="alert alert-danger"></div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
